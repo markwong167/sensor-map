@@ -9,7 +9,7 @@ export default function Home() {
           <PinchMap />
         </div>
       </div>
-      <div className='w-96 h-3/4 m-10 bg-zinc-200 '>
+      <div className='w-96 h-3/4 m-10 bg-zinc-200'>
         <InfoPanel />
       </div>
     </div>
