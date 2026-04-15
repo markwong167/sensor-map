@@ -1,3 +1,4 @@
+import { InfoPanel } from "./InfoPanel";
 import { PinchMap } from "./PinchMap";
 
 export default function Home() {
@@ -7,6 +8,9 @@ export default function Home() {
         <div className='max-w-1/2'>
           <PinchMap />
         </div>
+      </div>
+      <div className='w-96 h-3/4 m-10 bg-zinc-200 '>
+        <InfoPanel />
       </div>
     </div>
   );
