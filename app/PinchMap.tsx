@@ -1,18 +1,19 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import { useGetAllSensors } from "./hooks/useGetAllSensors";
+import SensorButton from "@/components/SensorButton";
+import { useSensorContext } from "./SensorContext";
 
 export const PinchMap = () => {
-  const sensors = [
-    { id: 1, label: "sensor 1", left: 100, top: 200, height: 1 },
-    { id: 2, label: "sensor 2", left: 600, top: 500, height: 3 },
-    { id: 3, label: "sensor 3", left: 1800, top: 300, height: 0.51 },
-    { id: 4, label: "sensor 4", left: 500, top: 1200, height: 6 },
-  ];
+  const { sensors } = useGetAllSensors();
+  const { setCurrSensor } = useSensorContext();
   const imageHeight = 1647;
   const imageWidth = 2059;
+  const handleClickedSensor = (sensor: Sensor) => {
+    setCurrSensor(sensor);
+  };
   return (
     <TransformWrapper>
       <TransformComponent>
@@ -23,20 +24,15 @@ export const PinchMap = () => {
           height={1647}
           priority
         />
-        {sensors.map((sensor) => (
-          <Button
+        {sensors?.map((sensor: Sensor) => (
+          <SensorButton
             key={sensor.id}
-            type='button'
-            onClick={() => console.log("clicked", sensor.id)}
-            className='absolute z-10 -translate-0.5'
-            style={{
-              left: `${(sensor.left / imageWidth) * 100}%`,
-              top: `${(sensor.top / imageHeight) * 100}%`,
-              transform: "translate(-50%, -50%)",
-            }}
-          >
-            {sensor.label}
-          </Button>
+            sensor={sensor}
+            left={`${(sensor.left / imageWidth) * 100}%`}
+            top={`${(sensor.top / imageHeight) * 100}%`}
+            status='online'
+            onSensorClicked={handleClickedSensor}
+          />
         ))}
       </TransformComponent>
     </TransformWrapper>
